@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h3>Principles of functional programming</h3>
+				<p>
+					<small>Created by <a href="https://github.com/1Alisa1">Alisa Dragun</a></small>
+				</p>
+			</section>
+			<section>
+				<h4>What is functional programming?</h4>
+				<aside class="notes">
+					Functional Programming is a paradigm of building computer programs using expressions and functions without
+					mutating state and data.
+				</aside>
+			</section>
+			<section>
+				<h4 style="color: darkorange;">Pure Functions</h4>
+				<section>
+					<ul>
+						<li>return the same result with the same input data</li>
+						<li>have no side effects </li>
+					</ul>
+				</section>
+				<section>
+					<h4>Side effects</h4>
+					<ul>
+						<li>Mutating input</li>
+						<li>console.log</li>
+						<li>HTTP calls</li>
+						<li>Changing the filesystem</li>
+						<li>Querying the DOM</li>
+					</ul>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						const SECRET = 42;  
+						const getId = (a) => SECRET * a;
+					</code></pre>
+					<p style="font-size: 0.6em;">Impure function</p>
+					<aside class="notes">
+						getId is not a pure function.
+						The reason being that it uses the global variable SECRET for computing the output.
+						If SECRET were to change, the getId function will return a different value for the same input.
+						That's why it is not a pure function.
+					</aside>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						Const add = (a, b) => a + b;
+					</code></pre>
+					<p style="font-size: 0.6em;">Pure function</p>
+					<aside class="notes">
+						Here, 'add' is a pure function.
+						This is because, for a fixed value of a and b, the output will always be the same.
+					</aside>
+				</section>
+				<section>
+					<h4>Pure functions in Java Script</h4>
+					<ul>
+						<li>arr.map(fn)</li>
+						<li>arr.filter(fn)</li>
+						<li>arr.reduce(fn)</li>
+					</ul>
+				</section>
+			</section>
+			<section>
+				<h4 style="color: darkorange;">Immutable Data</h4>
+				<section>
+					<ul>
+						<li>create new variables instead of changing the value of existing variables</li>
+					</ul>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						let ages = [12,32,32,53];
+
+						ages[1] = 12;
+						ages = [];
+						ages.push("2");
+					</code></pre>
+					<p style="font-size: 0.6em;">No</p>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						const ages = [12,32,32,53];
+						const newAges = ages.map((age) => age === 12 ? 20 : age);
+					</code></pre>
+					<p style="font-size: 0.6em;">Much better!</p>
+				</section>
+			</section>
+			<section>
+				<h4 style="color: darkorange;">First-Class Functions</h4>
+				<section></section>
+				<section data-auto-animate>
+					<h5>1. Assigned to variables</h5>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						const greet = function(name) {
+							return `Hello, ${name}!`;
+						};
+
+						greet('John');
+					</code></pre>
+					<aside class="notes">
+						In this example, the greet function is defined as an anonymous function and assigned to the variable greet.
+						This demonstrates the ability to treat functions as values.
+					</aside>
+				</section>
+				<section data-auto-animate>
+					<h5>2. Passed as arguments</h5>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						function calculate(operation, num1, num2) {
+							return operation(num1, num2);
+						}
+
+						function add(a, b) {
+							return a + b;
+						}
+
+						calculate(add, 2, 3);
+					</code></pre>
+					<aside class="notes">
+						In this example, the calculate function takes another function (operation) as an argument.
+						It demonstrates the ability to pass functions as arguments.
+					</aside>
+				</section>
+				<section data-auto-animate>
+					<h5>3. Returned from functions</h5>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						function multiplier(factor) {
+							return function(x) {
+								return x * factor;
+							};
+						}
+
+						const double = multiplier(2);
+						double(5);
+					</code></pre>
+					<aside class="notes">
+						Here, the multiplier function returns another function that can be used to calculate the product of a number
+						and a factor.
+						This showcases the ability to return functions from other functions.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<h4 style="color: darkorange;">Higher-Order Functions</h4>
+				<section>
+					<ul>
+						<li>take other functions as arguments</li>
+						<li>return functions as results</li>
+					</ul>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						const numbers = [1, 2, 3, 4, 5];
+						const squaredNumbers = numbers.map((el) => el * el); 
+						//[1, 4, 9, 16, 25]
+					</code></pre>
+					<aside class="notes">
+						The map function is a higher-order function that takes a callback function as arguments.
+						It applies the callback to each element of the array and returns a new array with the results.
+					</aside>
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						function greet() {
+							return 'Hello, world!';
+						}
+
+						setTimeout(greet, 2000);
+					</code></pre>
+					<aside class="notes">
+						Built-in functions like setTimeout can be considered higher-order functions.
+						They take a function as an argument and execute it after a specified time delay.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<h4 style="color: darkorange;">Recursion</h4>
+				<section>
+					<img src="./img/recursion.jpg" alt="Recursion">
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						function recurse(start, end) {
+							if (start === end) {
+								console.log(end);
+								return;
+							} else {
+								console.log(start);
+								return recurse(start + 1, end);
+							}
+						}
+
+						recurse(1, 10);
+						// 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+					</code></pre>
+					<aside class="notes">
+						One must be sure to define the base case.
+						A base case lets the function eventually stop calling into itself infinitely.
+						When start is equal to end we can stop recursing.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<h4 style="color: darkorange;">Currying</h4>
+				<section>
+					<img src="./img/currying.png" alt="Currying">
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						function curriedAdd(a) {
+							return function(b) {
+								return a + b;
+							};
+						}
+
+						const add = curriedAdd(2);
+						add(3); // 5
+					</code></pre>
+					<aside class="notes">
+						In this example, the 'curriedAdd' function takes a single argument a and returns another function that takes
+						the second argument b.
+						This allows us to create a function 'add' that adds 2 to any number by partially applying the first
+						argument.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<h4 style="color: darkorange;">Composition</h4>
+				<section>
+					<img src="./img/composition.jpg" alt="Composition">
+				</section>
+				<section data-auto-animate>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						const add2 = x => x + 2;
+						const multiply3 = x => x * 3;
+						const subtract5 = x => x - 5;
+
+						const compose = (...fns) => {
+							return (x) => {
+								return fns.reduceRight((acc, fn) => fn(acc), x);
+							};
+						};
+
+						const composedFunction = compose(subtract5, multiply3, add2);
+
+						composedFunction(5); // 16
+					</code></pre>
+					<aside class="notes">
+						In this example we have three simple functions: add2, multiply3, and subtract5, each performing a specific
+						operation on a given input.
+						The compose function takes any number of functions as arguments and returns a new function that applies each
+						function in reverse order (from right to left) to its argument.
+						We then create a new composed function composedFunction by passing subtract5, multiply3, and add2 to the
+						compose function.
+						When we call composedFunction(5), it first adds 2 to 5, then multiplies the result by 3, and finally
+						subtracts 5, resulting in the output 16.
+					</aside>
+				</section>
+			</section>
+			<section>
+				<h4>Thank you for your attention!</h4>
+			</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+</html>
